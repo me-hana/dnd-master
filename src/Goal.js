@@ -18,6 +18,7 @@ const Goal = () => {
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
+    drop: () => ({ name: "Hannah" }),
   });
   return (
     <>
