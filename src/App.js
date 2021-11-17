@@ -1,19 +1,35 @@
 import { useState } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import Card from "./Card";
-import Box from "./Box";
+import AppFirst from "./step-1/AppFirst";
 
 const App = () => {
-  const [isFirstBox, setIsFirstBox] = useState(true);
-  const Item = <Card setIsFirstBox={setIsFirstBox} />;
+  const [no, setNo] = useState(0);
+
+  const Content = (no) => {
+    switch (no) {
+      case 0:
+        return <div>빈화면</div>;
+      case 1:
+        return <AppFirst />;
+      case 2:
+        return;
+      default:
+        return <div>빈화면</div>;
+    }
+  };
 
   return (
     <div>
-      <DndProvider backend={HTML5Backend}>
-        <Box title="box-1">{isFirstBox && Item}</Box>
-        <Box title="box-2">{!isFirstBox && Item}</Box>
-      </DndProvider>
+      <button
+        onClick={() => {
+          setNo(1);
+        }}
+      >
+        Step 1
+      </button>
+      <button>Step 2</button>
+      <button>Step 3</button>
+      <button>Step 4</button>
+      {Content(no)}
     </div>
   );
 };
