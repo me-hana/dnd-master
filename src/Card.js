@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag } from "react-dnd";
 import { styled } from "@mui/material/styles";
 
 const ITEM_TYPE = "WHATEVER";
@@ -16,15 +15,23 @@ const CardWrapper = styled("div")(() => ({
   backgroundColor: "#fcf",
 }));
 
-const Card = () => {
+const Card = ({ setIsYellow }) => {
   const [{ isDragging }, drag] = useDrag({
     type: ITEM_TYPE,
     item: index,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    end: (item) => {
-      console.log("옮겨짐!");
+    end: (item, monitor) => {
+      if (monitor.didDrop()) {
+        console.log("옮겨짐!");
+        const dropResult = monitor.getDropResult();
+        if (dropResult && dropResult.name === "Hannah") {
+          setIsYellow(true);
+        } else {
+          setIsYellow(false);
+        }
+      }
     },
   });
 
@@ -32,7 +39,13 @@ const Card = () => {
 
   return (
     <>
-      <CardWrapper ref={drag} style={{ opacity, color: "grey" }}>
+      <CardWrapper
+        ref={drag}
+        style={{ opacity, color: "grey" }}
+        onClick={() => {
+          alert("클릭했따고!");
+        }}
+      >
         Card
       </CardWrapper>
     </>
