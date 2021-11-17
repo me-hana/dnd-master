@@ -1,7 +1,7 @@
 import { useDrag } from "react-dnd";
 import { styled } from "@mui/material/styles";
 
-const ITEM_TYPE = "WHATEVER";
+const ITEM_TYPE = "card";
 const index = {
   no: 1,
   name: "my_name",
@@ -9,13 +9,14 @@ const index = {
 };
 
 const CardWrapper = styled("div")(() => ({
-  height: "100px",
-  width: "200px",
+  height: "50px",
+  width: "100px",
   borderRadius: "10px",
   backgroundColor: "#fcf",
+  padding: 10,
 }));
 
-const Card = ({ setIsYellow }) => {
+const Card = ({ setIsFirstBox }) => {
   const [{ isDragging }, drag] = useDrag({
     type: ITEM_TYPE,
     item: index,
@@ -24,12 +25,12 @@ const Card = ({ setIsYellow }) => {
     }),
     end: (item, monitor) => {
       if (monitor.didDrop()) {
-        console.log("옮겨짐!");
+        console.log("moved!");
         const dropResult = monitor.getDropResult();
-        if (dropResult && dropResult.name === "Hannah") {
-          setIsYellow(true);
+        if (dropResult && dropResult.name === "box-1") {
+          setIsFirstBox(true);
         } else {
-          setIsYellow(false);
+          setIsFirstBox(false);
         }
       }
     },
@@ -41,9 +42,9 @@ const Card = ({ setIsYellow }) => {
     <>
       <CardWrapper
         ref={drag}
-        style={{ opacity, color: "grey" }}
+        style={{ opacity }}
         onClick={() => {
-          alert("클릭했따고!");
+          alert("click item!");
         }}
       >
         Card
