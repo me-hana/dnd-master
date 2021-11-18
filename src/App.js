@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AppFirst from "./step-1/AppFirst";
 import AppSecond from "./step-2/AppSecond";
+import AppThird from "./step-3/AppThird";
 
 const App = () => {
   const [no, setNo] = useState(0);
@@ -13,6 +14,8 @@ const App = () => {
         return <AppFirst />;
       case 2:
         return <AppSecond />;
+      case 3:
+        return <AppThird />;
       default:
         return <div>빈화면</div>;
     }
@@ -41,7 +44,13 @@ const App = () => {
       >
         Step 2
       </button>
-      <button>Step 3</button>
+      <button
+        onClick={() => {
+          setNo(3);
+        }}
+      >
+        Step 3
+      </button>
       <button>Step 4</button>
       {Content(no)}
     </div>
