@@ -25,7 +25,7 @@ const TextWrapper = styled("div")(() => ({
   display: "inline-block",
 }));
 
-const Card = ({ id, text, index, moveCard }) => {
+const Card = ({ id, text, index, moveCard, showCards }) => {
   const dragRef = useRef(null);
   const previewRef = useRef(null);
 
@@ -71,6 +71,11 @@ const Card = ({ id, text, index, moveCard }) => {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
+    end: (item, monitor) => {
+      if (monitor.didDrop()) {
+        showCards();
+      }
+    },
   });
 
   const opacity = isDragging ? 0 : 1;

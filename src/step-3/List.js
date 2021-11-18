@@ -25,6 +25,10 @@ const List = () => {
     [cards]
   );
 
+  const showCards = () => {
+    console.log("지금 데이터 상태는????", cards);
+  };
+
   return (
     <ListWrapper>
       {cards.map((card, i) => (
@@ -34,6 +38,7 @@ const List = () => {
           id={card.id}
           text={card.text}
           moveCard={moveCard}
+          showCards={showCards}
         />
       ))}
     </ListWrapper>
