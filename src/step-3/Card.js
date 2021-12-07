@@ -25,55 +25,67 @@ const TextWrapper = styled("div")(() => ({
   display: "inline-block",
 }));
 
-const Card = ({ id, text, index, moveCard, showCards }) => {
+const Card = ({ id, text, index, moveCard, findCard, showCards }) => {
   const dragRef = useRef(null);
   const previewRef = useRef(null);
+  const originalIndex = findCard(id).index;
 
-  const [, drop] = useDrop({
-    accept: ITEM_TYPE,
-    collect(monitor) {
-      return { handlerId: monitor.getHandlerId() };
-    },
-    hover(item, monitor) {
-      if (!previewRef.current) {
-        return;
-      }
-      const dragIndex = item.index;
-      const hoverIndex = index;
+  // const [, drop] = useDrop({
+  //   accept: ITEM_TYPE,
+  //   collect(monitor) {
+  //     return { handlerId: monitor.getHandlerId() };
+  //   },
+  //   hover(item, monitor) {
+  //     if (!previewRef.current) {
+  //       return;
+  //     }
+  //     const dragIndex = item.index;
+  //     const hoverIndex = index;
 
-      if (dragIndex === hoverIndex) {
-        return;
-      }
+  //     if (dragIndex === hoverIndex) {
+  //       return;
+  //     }
 
-      const hoverBoundingRect = previewRef.current?.getBoundingClientRect();
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+  //     const hoverBoundingRect = previewRef.current?.getBoundingClientRect();
+  //     const hoverMiddleY =
+  //       (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+  //     const clientOffset = monitor.getClientOffset();
+  //     const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
+  //     if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+  //       return;
+  //     }
+  //     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+  //       return;
+  //     }
 
-      moveCard(dragIndex, hoverIndex);
-      item.index = hoverIndex;
-    },
-  });
+  //     moveCard(dragIndex, hoverIndex);
+  //     item.index = hoverIndex;
+  //   },
+  // });
 
   const [{ isDragging }, drag, preview] = useDrag({
     type: ITEM_TYPE,
-    item: () => {
-      return { id, index };
-    },
+    item: { id, originalIndex },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
     end: (item, monitor) => {
-      if (monitor.didDrop()) {
+      const { id: droppedId, originalIndex } = item;
+      if (!monitor.didDrop()) {
         showCards();
+        moveCard(droppedId, originalIndex);
+      }
+    },
+  });
+
+  const [, drop] = useDrop({
+    accept: ITEM_TYPE,
+    canDrop: () => false,
+    hover({ id: draggedId }) {
+      if (draggedId !== id) {
+        const { index: overIndex } = findCard(id);
+        moveCard(draggedId, overIndex);
       }
     },
   });
