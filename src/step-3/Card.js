@@ -73,7 +73,7 @@ const Card = ({ id, text, index, moveCard, findCard, showCards }) => {
     end: (item, monitor) => {
       const { id: droppedId, originalIndex } = item;
       if (!monitor.didDrop()) {
-        showCards();
+        console.log("금지된 영역으로의 Drop");
         moveCard(droppedId, originalIndex);
       }
     },
@@ -81,12 +81,17 @@ const Card = ({ id, text, index, moveCard, findCard, showCards }) => {
 
   const [, drop] = useDrop({
     accept: ITEM_TYPE,
-    canDrop: () => false,
+    canDrop: () => true,
     hover({ id: draggedId }) {
       if (draggedId !== id) {
         const { index: overIndex } = findCard(id);
         moveCard(draggedId, overIndex);
+        console.log("useDrop hover");
       }
+    },
+    drop() {
+      console.log("제대로 떨어뜨리셨네요");
+      showCards();
     },
   });
 

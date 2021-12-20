@@ -1,11 +1,8 @@
 import { useState, useCallback } from "react";
 import { styled } from "@mui/material/styles";
-import { useDrop } from "react-dnd";
 import update from "immutability-helper";
 import { SampleData } from "./Data";
 import Card from "./Card";
-
-const ITEM_TYPE = "card";
 
 const ListWrapper = styled("div")(() => ({
   width: 400,
@@ -40,26 +37,67 @@ const List = () => {
     [findCard, cards, setCards]
   );
 
-  const [, drop] = useDrop(() => ({ accept: ITEM_TYPE }));
+  //   const [, drop] = useDrop({
+  //   accept: ITEM_TYPE,
+  //   collect(monitor) {
+  //     return { handlerId: monitor.getHandlerId() };
+  //   },
+  //   hover(item, monitor) {
+  //     if (!previewRef.current) {
+  //       return;
+  //     }
+  //     const dragIndex = item.index;
+  //     const hoverIndex = index;
+
+  //     if (dragIndex === hoverIndex) {
+  //       return;
+  //     }
+
+  //     const hoverBoundingRect = previewRef.current?.getBoundingClientRect();
+  //     const hoverMiddleY =
+  //       (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+  //     const clientOffset = monitor.getClientOffset();
+  //     const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+  //     if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+  //       return;
+  //     }
+  //     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+  //       return;
+  //     }
+
+  //     moveCard(dragIndex, hoverIndex);
+  //     item.index = hoverIndex;
+  //   },
+  // });
 
   const showCards = () => {
     console.log("지금 데이터 상태는????", cards);
   };
 
   return (
-    <ListWrapper ref={drop}>
-      {cards.map((card, i) => (
-        <Card
-          key={card.id}
-          index={i}
-          id={card.id}
-          text={card.text}
-          moveCard={moveCard}
-          findCard={findCard}
-          showCards={showCards}
-        />
-      ))}
-    </ListWrapper>
+    <>
+      <button
+        onClick={() => {
+          console.log("!@#$%", cards);
+        }}
+      >
+        지금 카드 상태
+      </button>
+      <ListWrapper>
+        {cards.map((card, i) => (
+          <Card
+            key={card.id}
+            index={i}
+            id={card.id}
+            text={card.text}
+            moveCard={moveCard}
+            findCard={findCard}
+            showCards={showCards}
+          />
+        ))}
+      </ListWrapper>
+    </>
   );
 };
 
