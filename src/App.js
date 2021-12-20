@@ -2,6 +2,7 @@ import { useState } from "react";
 import AppFirst from "./step-1/AppFirst";
 import AppSecond from "./step-2/AppSecond";
 import AppThird from "./step-3/AppThird";
+import AppFourth from "./step-4/AppFourth";
 import TestPage from "./TestPage";
 
 const App = () => {
@@ -17,6 +18,8 @@ const App = () => {
         return <AppSecond />;
       case 3:
         return <AppThird />;
+      case 4:
+        return <AppFourth />;
       default:
         return <div>잘못된 접근</div>;
     }
@@ -52,7 +55,13 @@ const App = () => {
       >
         Step 3
       </button>
-      <button>Step 4</button>
+      <button
+        onClick={() => {
+          setNo(4);
+        }}
+      >
+        Step 4
+      </button>
       {Content(no)}
     </div>
   );
