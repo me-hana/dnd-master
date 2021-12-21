@@ -58,7 +58,6 @@ const List = () => {
             id={card.id}
             text={card.text}
             subs={card.subs}
-            depth={0}
             moveCard={moveCard}
             findCard={findCard}
             showCards={showCards}

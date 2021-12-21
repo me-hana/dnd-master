@@ -26,15 +26,7 @@ const TextWrapper = styled("div")(() => ({
   display: "inline-block",
 }));
 
-const SubCard = ({
-  index,
-  id,
-  subText,
-  depth,
-  moveSub,
-  findSub,
-  showSubCards,
-}) => {
+const SubCard = ({ index, id, subText, moveSub, findSub, showSubCards }) => {
   const dragRef = useRef(null);
   const previewRef = useRef(null);
   const originalIndex = findSub(id).index;
@@ -57,7 +49,6 @@ const SubCard = ({
   const [, drop] = useDrop({
     accept: ITEM_TYPE,
     canDrop: () => true,
-    // hover에서 이상한 거 같은데...
     hover({ id: draggedId }) {
       if (draggedId !== id) {
         const { index: overIndex } = findSub(id);
@@ -67,7 +58,7 @@ const SubCard = ({
       }
     },
     drop() {
-      console.log("제대로 떨어뜨리셨네요");
+      console.log("제대로 떨어뜨린 거 맞음!!");
       showSubCards();
     },
   });
@@ -78,12 +69,12 @@ const SubCard = ({
   drop(preview(previewRef));
 
   return (
-    <>
-      <CardWrapper ref={previewRef} style={{ opacity }}>
-        <HandleWrapper ref={dragRef} />
-        <TextWrapper>{subText}</TextWrapper>
-      </CardWrapper>
-    </>
+    // <>
+    <CardWrapper ref={previewRef} style={{ opacity }}>
+      <HandleWrapper ref={dragRef} />
+      <TextWrapper>{subText}</TextWrapper>
+    </CardWrapper>
+    // </>
   );
 };
 

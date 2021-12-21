@@ -27,16 +27,7 @@ const TextWrapper = styled("div")(() => ({
   display: "inline-block",
 }));
 
-const Card = ({
-  index,
-  id,
-  text,
-  subs,
-  depth,
-  moveCard,
-  findCard,
-  showCards,
-}) => {
+const Card = ({ index, id, text, subs, moveCard, findCard, showCards }) => {
   const dragRef = useRef(null);
   const previewRef = useRef(null);
   const originalIndex = findCard(id).index;
@@ -65,6 +56,7 @@ const Card = ({
           ],
         })
       );
+      console.log(subCards);
     },
     [findSub, subCards, setSubCards]
   );
@@ -123,7 +115,6 @@ const Card = ({
             id={sub.subId}
             index={index}
             subText={sub.subText}
-            depth={depth + 1}
             moveSub={moveSub}
             findSub={findSub}
             showSubCards={showSubCards}
