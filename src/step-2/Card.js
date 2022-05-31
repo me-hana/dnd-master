@@ -44,6 +44,7 @@ const Card = ({ id, text, index, moveCard }) => {
 
       moveCard(dragIndex, hoverIndex);
       item.index = hoverIndex;
+      // console.log("인덱스좀 알려줘", index);
     },
   });
 

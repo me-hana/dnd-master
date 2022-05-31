@@ -3,6 +3,7 @@ import AppFirst from "./step-1/AppFirst";
 import AppSecond from "./step-2/AppSecond";
 import AppThird from "./step-3/AppThird";
 import AppFourth from "./step-4/AppFourth";
+import AppFifth from "./step-5/AppFifth";
 import TestPage from "./TestPage";
 
 const App = () => {
@@ -20,6 +21,8 @@ const App = () => {
         return <AppThird />;
       case 4:
         return <AppFourth />;
+      case 5:
+        return <AppFifth />;
       default:
         return <div>잘못된 접근</div>;
     }
@@ -61,6 +64,13 @@ const App = () => {
         }}
       >
         Step 4
+      </button>
+      <button
+        onClick={() => {
+          setNo(5);
+        }}
+      >
+        Step 5
       </button>
       {Content(no)}
     </div>
